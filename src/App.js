@@ -2,36 +2,17 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import environment from './Environment';
+import {Button} from 'react-bootstrap';
+import ListView from './ListView';
+import { Link } from 'react-router-dom';
 import {
   QueryRenderer,
   graphql
 } from 'react-relay';
-const AppAllPostsQuery = graphql`
-  query AppAllPostsQuery {
-    viewer{
-        allPosts(last:2){
-         edges{
-          	node{
-              description
-            }
-        	}
-          }
-    }
-  }
-`
 const AppAllDocsQuery = graphql`
   query AppAllDocsQuery {
     viewer{
-        allDoctorses(last:2){
-            edges{
-                node{
-          				firstname,
-          				lastname,
-          				subTitle,
-                  description
-                }
-              }
-          }
+        ...ListView_viewer
         }
     }
 `
@@ -46,9 +27,10 @@ class App extends Component {
               return <div>{error.message}</div>
             } else if (props) {
               return   <div className='w-100' style={{ maxWidth: 400 }}>
-                  {props.viewer.allDoctorses.edges.map(({node}) =>
-                    <div style={{height:100}}>{node.description}</div>
-                  )}
+                    <ListView viewer={props.viewer}/>
+                    <Link to='/reg_doc' className='fixed bg-white top-0 right-0 pa4 ttu dim black no-underline'>
+                      <Button bsStyle='success'>+ Create</Button>
+                    </Link>
                 </div>
             }
             return <div>Loading</div>
