@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {FormGroup,ControlLabel,FormControl,HelpBlock} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import {Button} from 'react-bootstrap';
+import DatePicker from 'react-date-picker';
 import CreateDoctorsMutation from './Mutations/CreateDoctorsMutation';
 import './App.css';
 class RegisterDoc extends Component {
@@ -51,13 +52,9 @@ class RegisterDoc extends Component {
               onChange={(e) => this.setState({subTitle: e.target.value})}
             />
             <br/>
-            <FormControl
-              type="text"
-              bsClass="TxtBox"
+            <DatePicker id="example-datepicker"
               value={this.state.datelicensed}
-              placeholder="Enter Date Licensed"
-              onChange={(e) => this.setState({datelicensed: e.target.value})}
-            />
+              onChange={(e) => this.setState({datelicensed: e.target.value})} />
             <br/>
             <FormControl
               bsClass="TxtBox"
@@ -84,7 +81,7 @@ class RegisterDoc extends Component {
   _handleSave=()=>{
     console.log("save clicked");
     const {firstname,lastname,description,title,subTitle,datelicensed,visitCharge} = this.state
-    CreateDoctorsMutation(firstname,lastname,description,title,subTitle,datelicensed,300, () => this.props.history.replace('/'));
+    CreateDoctorsMutation(firstname,lastname,description,title,subTitle,datelicensed,Number.parseInt(visitCharge), () => this.props.history.replace('/'));
   }
 }
 export default RegisterDoc;
