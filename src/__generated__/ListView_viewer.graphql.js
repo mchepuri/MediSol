@@ -36,7 +36,7 @@ const fragment /*: ConcreteFragment*/ = {
         {
           "kind": "Literal",
           "name": "last",
-          "value": 2,
+          "value": 200,
           "type": "Int"
         }
       ],
@@ -95,7 +95,7 @@ const fragment /*: ConcreteFragment*/ = {
           "storageKey": null
         }
       ],
-      "storageKey": "allDoctorses{\"last\":2}"
+      "storageKey": "allDoctorses{\"last\":200}"
     }
   ],
   "type": "Viewer"

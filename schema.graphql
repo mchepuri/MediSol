@@ -1,3 +1,35 @@
+type Subscription {
+	Doctors(filter: DoctorsSubscriptionFilter): DoctorsSubscriptionPayload
+}
+
+input DoctorsSubscriptionFilter {
+	mutation_in: [_ModelMutationType!]
+}
+
+type DoctorsSubscriptionPayload {
+	mutation: _ModelMutationType!
+	node: Doctors
+	updatedFields: [String!]
+	previousValues: DoctorsPreviousValues
+}
+
+enum _ModelMutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+type DoctorsPreviousValues {
+	datelicensed: DateTime!
+	description: String!
+	firstname: String!
+	id: ID!
+	lastname: String!
+	subTitle: String!
+	title: String!
+	visitCharge: Int!
+}
+
 input CreateDoctors {
   datelicensed: DateTime!
   description: String!
@@ -1333,4 +1365,3 @@ type Viewer {
   User(id: ID): User
   id: ID!
 }
-

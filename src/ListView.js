@@ -4,13 +4,19 @@ import {
   createFragmentContainer,
   graphql
 } from 'react-relay';
-
+import NewDoctorsSubscription from './Subscriptions/NewDoctorsSubscription';
 class ListView extends Component {
+  componentDidMount(){
+    NewDoctorsSubscription();
+  }
   render() {
     return (
       <div>
+        <p/>
         {this.props.viewer.allDoctorses.edges.map(({node}) =>
-        node.description
+        <p>
+          {node.description}
+        </p>
         )}
       </div>
     );
@@ -18,7 +24,7 @@ class ListView extends Component {
 }
 export default createFragmentContainer(ListView,graphql`
   fragment ListView_viewer on Viewer{
-    allDoctorses(last:2){
+    allDoctorses(last:200){
         edges{
             node{
               firstname,

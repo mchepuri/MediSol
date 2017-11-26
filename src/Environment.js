@@ -1,10 +1,12 @@
+import { SubscriptionClient } from 'subscriptions-transport-ws';
 const {
   Environment,
   Network,
   RecordSource,
   Store
 } = require('relay-runtime');
-const network = Network.create((operation,variables)=>{
+
+const fetchQuery = (operation,variables)=>{
   return fetch('https://api.graph.cool/relay/v1/cj9n63e180f6b01082x4d0rmv',{
   method: 'POST',
   headers:{
@@ -19,7 +21,18 @@ const network = Network.create((operation,variables)=>{
 ).then(response => {
    return response.json()
 })
-})//close create
+};
+
+const setupSubscription = (config, variables, cacheConfig, observer) => {
+  const query = config.text
+
+  const subscriptionClient = new SubscriptionClient('wss://subscriptions.us-west-2.graph.cool/v1/cj9n63e180f6b01082x4d0rmv', {reconnect: true})
+  subscriptionClient.subscribe({query, variables}, (error, result) => {
+    observer.onNext({data: result})
+  })
+ }
+
+const network = Network.create(fetchQuery,setupSubscription); //close create
 
 const source = new RecordSource()
 const store = new Store(source)
